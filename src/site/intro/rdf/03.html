@@ -1,0 +1,37 @@
+<div>
+
+    <h2>Defining Terms</h2>
+
+    <p>We should probably explain what <code>eg:knows</code>, <code>eg:name</code> and <code>eg:DoB</code> mean.
+        Whilst english speaking humans might understand, non-anglophones and machines will not.</p>
+    <p>The RDF Schema vocabulary (<code>rdfs:</code>) uses RDF to define a RDF terms.
+        Everything in the Semantic Web is ultimately grounded in the same core <code>rdf:</code> terms.</p>
+
+   <p>So, let's introduce our terms. The <code>rdfs:range</code> defines the &lt;object&gt; part of the triple:</p>
+
+    <pre>
+        # Our first vocabulary in N3 notation:
+        @PREFIX     rdfs:		&lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+        eg:name     rdfs:range          xsd:string.
+        eg:DoB      rdfs:range          xsd:date.</pre>
+
+    <h2>Relating Terms</h2>
+
+    <p>We can define the &lt;subject&gt; part too. Assuming, we mean each term applies to a <code>eg:Person</code>, we would say:</p>
+    <pre>
+        eg:knows    rdfs:domain         eg:Person.
+        eg:DoB      rdfs:domain         eg:Person.
+        eg:name     rdfs:domain         eg:Person.</pre>
+
+    <p>Each statement declares that the &lt;subject&gt; of an <code>eg:knows</code> relationship can be assumed to refer to a <code>eg:Person</code>.</p>
+
+    <p>We would probably want to say that <code>eg:Person</code> is the object of the <code>eg:knows</code> relationship too.</p>
+    <pre>
+        eg:knows    rdfs:range          eg:Person.</pre>
+
+    <p>The ideas behind RDFS may feel strange to those used to SQL database schemas. These definitions
+        do not actually say that only a <code>eg:Person</code> can only <code>eg:knows</code> a <code>eg:Person</code>.</p>
+
+
+</div>

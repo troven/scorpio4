@@ -1,0 +1,39 @@
+Sydney, Australia - Our digital world is incredibly complex, with billions of computers and millions of humans all trying to work together.
+
+In many cases, computers systems collaborate without human intervention. This is often a huge headache for
+users, programmers and business stakeholders.
+
+Collaborating systems agree a mutual contract that each computer must obey if they want to use the service.
+
+Technically, these are called APIs. They are the backbone of the modern internet.
+
+APIs power everything from e-commerce to email.
+
+Every computer or smart phone can send and receive emails simply by following these globally agreed email contracts.
+
+Household names such as Microsoft, Amazon, EBay, Google, Facebook, SAP and Salesforce are some of the biggest providers of API services.
+
+Increasingly, modern businesses create private APIs so that their trading partners can do business with them more efficiently.
+In a recent survey, there are nearly 200,000 API services, 9 out of 10 of of them are private.
+
+Of course, if a contract changes all the users of the services must be re-programmed. This is a huge expense and inconvenience.
+
+Experts predicts billions of devices will be coming online in the next few years. This
+is often called the Internet of Things, where everything from our cars to heart monitors will be
+connected to the Internet.
+
+A team of Australian software engineers have worked out how to make it cheaper
+for people and computers to collaborate more seamlessly.
+
+The team used techniques borrowed from Artificial Intelligence research to produce and consume
+APIs by describing what we want to achieve, rather than how to do something.
+
+Their solution, Scorpio, was designed to allow businesses to enjoy the benefits of integration.
+In the process, to reduce software costs & complexity, minimize manual data entry, increase data quality, and
+
+In the end, Scorpio aims to make business-to-business collaboration more automated, efficient and transparent whilst
+improving agility and flexibility.
+
+It's a win-win - a big problem, an elegant solution and best of all, Scorpio is free.
+
+Visit www.scorpio4.com for more details, and find expert to help you to build a more connected world.

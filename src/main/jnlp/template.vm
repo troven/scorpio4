@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="$encoding"?>
+<jnlp
+    spec="$jnlpspec"
+    codebase="$jnlpCodebase"
+    href="$outputFile">
+  <information>
+#if($project.Name)
+    <title>$project.Name</title>
+#end
+#if($project.Organization.Name)
+    <vendor>$project.Organization.Name</vendor>
+#else
+    <vendor>$project.Name</vendor>
+#end
+#if($project.Url)
+    <homepage href="$project.Url"/>
+#end
+#if($project.Description)
+    <description>$project.Description</description>
+#end
+#if($offlineAllowed)
+    <offline-allowed/>
+#end
+  </information>
+#if($allPermissions)
+  <security>
+     <all-permissions/>
+  </security>
+#end
+  <resources>
+    <j2se version="$j2seVersion"/>
+     $dependencies
+ <!--
+     $extensions
+# Identify the default Application context
+id=IQ-Example
+this=urn:example:app:hello
+curated=urn:example
+url=http://127.0.0.1:8080/openrdf-sesame/repositories/example
+home=src/test/resources/
+
+deploy.from=src/main/resources/factcore/
+
+webroot=./src/main/resources/www/
+httpPort=9099
+ajp13Port=-1
+debug=10
+logfile=logs/iq-www.log
+useServletReloading=true
+useSavedSessions=false
+realmClassName=com.factcore.security.winstone.CoreRealm
+fileRealm.configFile=core/users.xml
+accessLoggerClassName=winstone.accesslog.SimpleAccessLogger
+simpleAccessLogger.format=###date###\ ###uriLine###
+simpleAccessLogger.file=logs/access.log
+
+-->
+     <property name="this" value="urn:example:app:hello"/>
+     <property name="curated" value="urn:example"/>
+     <property name="url" value="http://127.0.0.1:8080/openrdf-sesame/repositories/example"/>
+     <property name="home" value="factcore/home/"/>
+     <property name="webroot" value="factcore/www/"/>
+     <property name="httpPort" value="9099"/>
+
+  </resources>
+  <application-desc main-class="$mainClass"/>
+</jnlp>
+

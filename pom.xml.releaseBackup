@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.scorpio4</groupId>
+        <artifactId>scorpio4</artifactId>
+        <version>0.06-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <artifactId>scorpio4website</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Scorpio4 Website</name>
+    <url>http://www.scorpio4.com</url>
+
+    <organization>
+        <name>scorpio4</name>
+        <url>http://www.scorpio4.com/pom/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>lee</id>
+            <name>Lee Curtis</name>
+            <email>lee.curtis@me.com</email>
+            <organization>Scorpio4 Foundation</organization>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+11</timezone>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>github.com/scorpio4/scorpio4website.git</url>
+        <connection>scm:git:https://github.com/scorpio4/scorpio4website.git</connection>
+      <tag>scorpio4-0.06</tag>
+  </scm>
+
+    <properties>
+        <scorpio4.id>urn:${project.artifactId}:</scorpio4.id>
+        <main.class>com.scorpio4.runtime.Personal</main.class>
+    </properties>
+
+
+    <build>
+        <plugins>
+            <!--<plugin>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<version>2.4</version>-->
+                <!--<configuration>-->
+                    <!--<descriptor>src/main/assembly/scorpio4.xml</descriptor>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>make-assembly</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>single</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <providerSelection>2.0</providerSelection>
+                    <source />
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <buildNumberPropertiesFileLocation>${basedir}/build.version.properties</buildNumberPropertiesFileLocation>
+                    <revisionOnScmFailure>localBuild</revisionOnScmFailure>
+                    <shortRevisionLength>5</shortRevisionLength>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/logback-test.xml</exclude>
+                    </excludes>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addClasspath>true</addClasspath>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <!--
+                                         <classpathLayoutType>custom</classpathLayoutType>
+                                         <customClasspathLayout>$${artifact.artifactId}-$${artifact.baseVersion}.$${artifact.extension}</customClasspathLayout>
+             -->
+                            <mainClass>${main.class}</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Build>$\{buildNumber}</Implementation-Build>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>webstart-maven-plugin</artifactId>
+                <version>1.0-beta-3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jnlp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--outputDirectory></outputDirectory--> <!-- not required?? -->
+
+                    <!--
+                    Set to true to exclude all transitive dependencies. Default is false.
+                    -->
+                    <excludeTransitive>false</excludeTransitive>
+
+                    <!-- The path where the libraries are stored within the jnlp structure. not required. by default the libraries are within the working directory -->
+                    <!--
+                                        <libPath></libPath>
+                    -->
+                    <!-- [optional] transitive dependencies filter - if omitted, all transitive dependencies are included -->
+                    <!--
+                                        <dependencies>
+                                        <includes>
+                                            <include>commons-logging:commons-logging</include>
+                                            <include>commons-cli:commons-cli</include>
+                                        </includes>
+                                    </dependencies>
+
+
+                                    -->
+                    <resourcesDirectory>${project.basedir}/src/main/jnlp/resources</resourcesDirectory>
+
+                    <!-- JNLP generation -->
+                    <jnlp>
+                        <!--inputTemplateResourcePath>${project.basedir}</inputTemplateResourcePath-->
+                        <!--inputTemplate>src/main/jnlp/template.vm</inputTemplate--> <!-- relative to inputTemplateResourcePath -->
+                        <outputFile>factcore.jnlp</outputFile>
+                        <mainClass>com.factcore.run.WebStart</mainClass>
+                    </jnlp>
+
+
+                    <!-- SIGNING -->
+                    <sign>
+                        <keystore>../../factcore-webstart.keys</keystore>
+                        <keypass>factcore:lee:gia:bree</keypass>
+                        <storepass>factcore:lee:gia:bree</storepass>
+                        <alias>factcore</alias>
+                        <verify>true</verify>
+                    </sign>
+
+                    <!-- BUILDING PROCESS -->
+
+                    <pack200>true</pack200>
+                    <gzip>true</gzip>
+
+                    <outputJarVersions>false</outputJarVersions>
+                    <verbose>true</verbose>
+
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <configuration>
+                    <webappDirectory>${project.webapp.directory}/VAADIN/widgetsets</webappDirectory>
+                    <extraJvmArgs>-Xmx2048M -Xss1024k</extraJvmArgs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>resources</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <!-- Project dependencies -->
+    <dependencies>
+
+        <dependency>
+            <groupId>com.scorpio4</groupId>
+            <artifactId>scorpio4runtime</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>release-tag</id>
+            <activation>
+                <property>
+                    <name>release-tag-name</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <version>1.0</version>
+                        <dependencies>
+                            <!--
+                                                        <dependency>
+                                                            <groupId>org.codehaus.plexus</groupId>
+                                                            <artifactId>plexus-utils</artifactId>
+                                                            <version>2.1</version>
+                                                        </dependency>
+
+
+                                                        <dependency>
+                                                            <groupId>org.apache.stanbol</groupId>
+                                                            <artifactId>stanbol</artifactId>
+                                                            <version>0.10.0-SNAPSHOT</version>
+                                                        </dependency>
+                            -->
+                            <dependency>
+                                <groupId>org.apache.maven.scm</groupId>
+                                <artifactId>maven-scm-provider-gitexe</artifactId>
+                                <version>1.7</version>
+                            </dependency>
+
+                        </dependencies>
+                        <configuration>
+                            <tag>${release-tag-name}</tag>
+                            <connectionType>developerConnection</connectionType>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>tag</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.camel</groupId>
+                        <artifactId>camel-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <reporting>
+        <plugins>
+
+        </plugins>
+    </reporting>
+</project>

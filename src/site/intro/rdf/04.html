@@ -1,0 +1,53 @@
+<div>
+
+    <h2>Inferring Terms</h2>
+    <p>Scorpio<sup>4</sup> natively understands the RDFS vocabulary. In practice, that means Scorpio<sup>4</sup> can apply common sense and infer:</p>
+
+    <pre>
+        :sally      a       eg:Person.
+        :harry      a       eg:Person.</pre>
+    <p>It doesn't quite end there. The RDFS vocabulary itself defines inferences. We can expect to infer some basic facts such as:</p>
+
+    <pre>
+    eg:Person
+                    a       rdfs:Class;
+                    a       rdfs:Resource.
+
+    :name           a       rdf:Property.
+    :DoB            a       rdf:Property.
+    :knows          a       rdf:Property.</pre>
+
+    <h2>Term Hierarchies</h2>
+    <p>RDFS has two (2) other terms that are similarly powerful <code>rdfs:subClassOf</code> and <code>rdfs:subPropertyOf</code></p>
+
+    <p>We might want to state that all instances of a <eg>eg:Male</eg> or a <eg>eg:Female</eg> are also a type of <eg>eg:Person</eg>. It's a reasonably safe assumption.</p>
+    <pre>
+        eg:Male     rdfs:subClassOf     eg:Person.
+        eg:Female   rdfs:subClassOf     eg:Person.
+
+        :anne       a                   eg:Female.
+        :dick       a                   eg:Male.</pre>
+    <p>The RDFS inferencing rules would apply "common sense" and automatically assert some : </p>
+    <pre>
+        :anne      a       eg:Person.
+        :dick      a       eg:Person.</pre>
+
+    <p>Other hierarchies and complex data structures can be built up from these basic terms.</p>
+    <h2>Nonesense</h2>
+    <p>Before we get carried away, please remember that neither RDF nor Scorpio<sup>4</sup> are smarter than we are.</p>
+    <p></p>It's quite easy to make some logical gaffes that the RDFS inferencing rules will take as facts, and therefore drawn the wrong conclusions.</p>
+
+    <p>In more advanced exercises, we can define Sanity Checks that can identify and flag these logic errors.</p>
+
+    <h2>Open and Closed World</h2>
+
+
+    <p>A SQL schema frequently asserts constraints that limit what can, and must, be described.
+        This works very well in a closed system, such as a legacy business application.</p>
+
+    <p>RDFS, however, works in a more uncertain world. It assumes that not all information is present.
+        The RDFS schema
+        instead specifies inferences, logical statements that can be assumed when certain statements are present.</p>
+
+
+</div>

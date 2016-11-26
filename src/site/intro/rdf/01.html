@@ -1,0 +1,50 @@
+<div>
+    <h2>Statements of Fact</h2>
+
+    <p>Scorpio<sup>4</sup> uses RDF to describe it's view of the world.
+    RDF allows us to make statements about the world, by combining three URIs into a statement, called a triple.</p>
+    <p>Triples can be expressed in numerous notations. The Scorpio<sup>4</sup> team prefer the rather human-readable <code>N3</code> notation but cousins, such as <code>XML</code> and <code>JSON</code> exist.</p>
+
+    <p>The general format of an RDF statement looks like this:</p>
+    <pre>
+        &lt;statement&gt;   &lt;property&gt;   &lt;object&gt;. </pre>
+
+    <p>Where each of the &lt;&gt; terms are understood to be URIs. The benefit of using URIs is that they have a globally significant meaning.</p>
+    <p>Each URI is administered within a namespace. For example, we use a <code>http://scorpio4demo.com/</code> for our examples.</p>
+    <p>Domain names are ideal for this purpose, and RDF was designed to work perfectly with the original world wide web.</p>
+
+    <h2>Properties</h2>
+    <p>The &lt;property&gt; are the most expressive of the three. They define the relationships between the subject and object terms.
+    They can thought of as adjectives, verbs, predicates or simply links depending on the context.</p>
+    <p>Scorpio<sup>4</sup> uses the properties to bring your statements to life, when those properties are defined by an Active Vocabulary.</p>
+
+    <h2>Hard Facts</h2>
+    <p>URIs can get unwieldy, and our triples require three (3) of them. Helpfully, RDF includes a mechanism to shorten them, we can use a <code>PREFIX</code>:</p>
+    <pre>
+        @PREFIX     eg:        &lt;http://scorpio4demo.com/example/#&gt;.
+        @PREFIX     rdf:       &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
+        @PREFIX     :          &lt;http://scorpio4demo.com/example/eg01#&gt;.
+
+        # Our first fact in N3 notation:
+        :fact1      rdf:type    eg:Example.</pre>
+
+    <p>In this example, we have declared and used three namespaces: <code>rdf:</code>, <code>eg:</code> and a solitary <code>:</code> notation meaning the current document.</p>
+    <p>We have stated that <code>:something</code> within the local document is an instance of the class of <code>eg:Example</code> entities. Or colloquially, <code>something</code> is an <code>Example</code>.</p>
+    <p>The <code>rdf:</code> namespace is defined by the W3C, and forms the core of the RDF standard. The RDF vocabulary (by convention) defines all of it's terms within that namespace.</p>
+    <p>You will create many namespaces of your own, they are often documents that are stored on the WWW (hence, the <code>HTTP</code>).</p>
+
+    <h2>Literal Facts</h2>
+    <p>A second variation of statements are permitted, these describe literal values.
+        For a literal, the object is replaced with a simple string notation.</p>
+
+    <pre>
+        &lt;statement&gt;   &lt;property&gt;   &quot;object&quot;^^&lt;data-type&gt;.</pre>
+
+    <p>The literals are very useful for describing human-readable meta-data. They are usefully less well defined than
+    the URI object. It is still a triple, the 3rd URI is used to denote the data-type rather than the data iteelf.</p>
+    <p>The <code>^^&lt;data-type&gt;</code> can be omitted, in which case an <code>xsd:string</code> is assumed. This makes the common case rather concise.</p>
+
+    <p>Scorpio<sup>4</sup> mostly works using the first variant, what we call "hard facts" as opposed to "literal facts".</p>
+
+
+</div>

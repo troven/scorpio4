@@ -1,0 +1,85 @@
+<div>
+    <h2>Active ASQ</h2>
+
+    <p>ASQ is Scorpio<sup>4</sup>'s Abstract Semantic Query language. It's a way to talk about
+    triple patterns.</p>
+    <p>We'll create a semantic query of the following SPARQL: </p>
+    <pre>
+        SELECT ?this WHERE {
+            ?this a eg:Example.
+        }</pre>
+    <p>Only triples that match the pattern are returned, in this case all <code>eg:Example</code>s.  </p>
+
+    <p>Technically, we want to solve <code>?this</code> for anything that is a <code>rdf:type</code> of <code>eg:Example</code>.</p>
+    <p>ASQ provides 3 predicates to talk about each part of the triple pattern:</p>
+    <table border="1" cellspacing='0' cellpadding="5">
+        <tr><td><code>asq:this</code></td><td><code>asq:has</code></td><td><code>asq:that</code></td></tr>
+        <tr><td>:this</td><td>rdf:type</td><td>eg:Example</td></tr>
+    </table>
+    <p>ASQ adopts the convention that local names, such as <code>:this</code> are used to refer to a solution variable. In this case, <code>?this</code> in SPARQL is the same as <code>:this</code> in ASQ</p>
+    <p>Lets begin with some boilerplate. It's semantic politeness.</p>
+    <pre>
+    @prefix : 		        &lt;http://example.com/asq/Example/&gt;.
+
+    :		    a	        eg:Example.
+    :		    a	        asq:Query.</pre>
+
+    <p>The <code>asq:where</code> predicate is used to specify a triple pattern.
+    <pre><strike>
+	:           asq:where       :pattern1.
+	:pattern1   asq:this        :this.    </strike></pre>
+
+    <pre>
+	:	asq:this	:this;
+		asq:has		rdf:type;
+		asq:that	eg:Example;
+    .
+    </pre>
+    <p>It's time step up our syntax. The <code>;</code> replaces the <code>.</code> to indicate that a common subject is shared between triples.</p>
+
+    <p>We can also use <code>[]</code> to talk about "something". This lets us join our
+        3 pattern terms to the query, using <code>asq:where</code></p>
+    <pre>
+	: asq:where [
+		asq:this	:this;
+		asq:has		rdf:type;
+		asq:that	eg:Example;
+	];</pre>
+
+    <p>Technically, the [] is a blank node. This anonymous URI is used as the object of the <code>asq:where</code> and with <code>;</code> it is also the subject of the included triples.</p>
+    <p>The effect is triply pleasing, it's readable, our intentions are clear and all our triples are intact. </p>
+    <p>We can add more patterns to refine our selection, so let's constraint by <code>asq:Query</code> too.
+        Since our query is one of those, we are guaranteed at least one result:
+        </p>
+    <pre>
+	: asq:where [
+		asq:this	:this;
+		asq:has		rdf:type;
+		asq:that	asq:Query;
+	].</pre>
+
+    <p> In some cases, we'll want optional patterns. These are especially helpful when used as solution
+        variables to return the object. So, we can ask for the human-readable <code>rdfs:label</code>, if it exists:
+    </p>
+
+    <pre>
+	: asq:optional [
+		asq:this	:this;
+		asq:has		rdfs:label;
+		asq:that	:label;
+	];</pre>
+
+    <p>And here is the expected SPARQL result:</p>
+    <pre>
+# @namespaces
+SELECT DISTINCT ?this ?label
+WHERE {
+	?this a asq:Query .
+	?this a eg:Example .
+	OPTIONAL {
+		?this rdfs:label ?label .
+	}
+}
+    </pre>
+    <p>We can keep going, nesting <code>asq:where</code> and <code>asq:optional</code> clauses.</p>
+</div>

@@ -1,0 +1,55 @@
+<div>
+
+    <h2>Building Knowledge</h2>
+    <p>RDF is very flexible, each fact within a statement may refer to other facts.
+        When these triples are logically combined, they create a web-of-data.  </p>
+
+    <pre>
+        @PREFIX     eg:        &lt;http://scorpio4demo.com/example/#&gt;.
+
+        :sally      eg:knows    :harry.</pre>
+
+    <p>A giant global graph as a data structure is a powerful idea. It can express almost any data, and any relationship. </p>
+
+   <p>We can, and should, use triples to express both data and meta-data about our problem domain.</p>
+
+    <h2>Self Describing</h2>
+    <p>With a URI, you
+        can recursively keep asking for more information until you have what you need, or exhaust your search.</p>
+    <p>In this example, we could start asking facts about <code>:harry</code> or adding facts about <code>:sally</code>.
+        We can ask about <code>eg:knows</code>. We have a well defined relationship between our facts.</p>
+
+
+    <h2>Literal Facts</h2>
+    <p>
+        So, URIs are useful, we also need to express simpler literal facts.
+        <pre>
+
+        @PREFIX     eg:        &lt;http://scorpio4demo.com/example/#&gt;.
+        @PREFIX     rdf:       &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
+        @PREFIX     :          &lt;http://scorpio4demo.com/example/eg01#&gt;.
+
+        # Our first paragraph in N3 notation:
+
+        :sally      eg:name     "Sally Smith".
+        :sally      eg:DoB      "1972-07-13"^^xsd:date.</pre>
+
+    </p>
+
+    <h2>Prefix Expansion</h2>
+    <p>Remember, each of the non-literal terms is defined by a URI. Internally, the prefixes are joined with the suffix to create a fully qualified URI. </p>
+    <pre>      http://scorpio4demo.com/example/eg01#harry</pre>
+    <pre>      http://scorpio4demo.com/example/eg01#sally</pre>
+    <pre>      http://scorpio4demo.com/example/#name</pre>
+    <pre>      http://scorpio4demo.com/example/#DoB</pre>
+
+    <p>The <code>N3</code> notation offers a number of conveniences apart from <code>PREFIX</code>.
+        Often we want to state many facts about a common subject.</p>
+    <p>In this case, N3 allows us to declare the subject once, by using a <code>;</code> semi-colon.</p>
+    <pre>
+        :sally      rdf:type    eg:Person;
+                    eg:name     "Sally Smith";
+                    eg:DoB      "1972-07-13"^^xsd:date.</pre>
+    <p>Notice, that we finished our paragraph with a <code>.</code> period. The next statement must now specify the subject afresh.</p>
+
+</div>

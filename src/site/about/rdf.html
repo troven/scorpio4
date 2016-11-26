@@ -1,0 +1,73 @@
+<div>
+    <h2>Scorpio<sup>4</sup> RDF</h2>
+    <p>Scorpio<sup>4</sup> let you works in a near-english language, that grows smarter the most it's used.</p>
+    <p>It's a progeny of Sir Tim Berners Lee, it's call RDF. And in a certain light it is rather elegant.</p>
+
+    <p>RDF is a data modelling language that uses URIs to describe everything. A URI is a globally agreed unique identifier. Any web site URL is also a URI.</p>
+
+    <p>We can make english-like statements using 3 URIs using the Turtle syntax:</p>
+    <pre>
+        @PREFIX eg:     &lt;http://example.org/&gt;.              # a prefix makes URIs prettier
+
+        eg:Sally         eg:drinks          eg:Coffee.      # the full stop is required.
+    </pre>
+    <p>If we said the same thing without the PREFIX, we would see:</p>
+
+    <pre>
+        &lt;http://example.org/Sally&gt;
+        &lt;http://example.org/drinks&gt;
+        &lt;http://example.org/Coffee&gt;.</pre>
+
+    <h3>Hard Facts</h3>
+    <p>A "Hard Fact" is comprised of 3 distinct URIs. In RDF, they are called the subject, predicate and object.</p>
+    <p>The predicate is the powerhouse. It tells us how the subject and object are related. It's quite helpful to use it like a verb or adjective.</p>
+
+    <pre>
+        eg:Sally         eg:knows           eg:Bob.
+        eg:Bob           eg:drinks          eg:Tea.</pre>
+
+    <p>Unlike with literals, you can make further statements about each URI independently. This allows us to create a 3 dimension data model.</p>
+
+    <h3>Literal Facts</h3>
+    <p>Literals can represent strings, booleans, numbers, dates, times. Any simple <code>xsd:</code> data type.</p>
+    <pre> eg:Sally    eg:name         "Sally Smith"^^xsd:string.</pre>
+    <p>Where we have declared that resource <code>eg:Sally</code> has a literal <code>"Sally Smith"</code> as her <code>eg:name</code>.</p>
+    <p>Our fact is semantically weaker, since we can't state anything facts about the literal itself.</p>
+
+    <h3>Fact Space</h3>
+<p>Often we want to define triples for a given context, a problem domain.
+    The same facts may not hold true under different scenarios, or circumstances.</p>
+<p>We call this a "Fact Space", and it's referenced by a URI, of course.
+    Painlessly, our triples are now quads. We are working with a 4 dimension data model.
+</p>
+
+    <h3>Inferencing</h3>
+    <p>If you think about relationships, they tell you a lot about the two parties. In other words, we can make inferences about the subjects and objects by referencing the predicate.</p>
+
+    <p>If we use the <code>rdfs</code> vocabulary to describe predicates:.</p>
+    <pre>
+        eg:drinks       rdfs:domain         eg:Drinker.
+        eg:drinks       rdfs:range          eg:Beverage.
+    </pre>
+
+    <p>Scorpio<sup>4</sup> will logically infer the following statements:</p>
+    <pre>
+        eg:Tea           a                  eg:Beverage.
+        eg:Coffee        a                  eg:Beverage.
+        eg:Bob           a                  eg:Drinker.
+        eg:Sally         a                  eg:Drinker.
+    </pre>
+
+    <h3>Linked Data</h3>
+    <p>Each atomic element of the statement is actually a URI - a globally unique identifier just like a web page. In fact some web pages already support embedded RDF.</p>
+    <pre>http://example.org/whatis/Black_Coffee</pre>
+    <p>Since each URI is globally addressable, it's possible to request more RDF that further expands the definition of :BlackCofee - perhaps that is suppliers, recipes or health related</p>
+    <p>From the RDF that the Black_Coffee site provides about it's beverage, we find more statements. We can continue like this until all the world's <i>relevant</i> linked data is consumed.</p>
+    <p>It's the links that matter. Those relationships provide meaning - hence the semantic web. Since all data can theoretically be called upon to explain itself, it makes for a very powerful knowledge management framework.</p>
+
+    <h3>To Schema or Not Schema</h3>
+    <p>A schema in SQL is a set of constraints that are imposed on the structure of the data. With RDF, a schema is a logical set of rules that infer further facts.</p>
+    <p>Furthermore, the data and meta-data are indistinguishable - all the tools and techniques that work with data also apply to meta-data.</p>
+    <p>RDF is flexible and simple enough that it can describe queries, data models, user interfaces, validation rules, business processes, integration patterns and more.</p>
+    <p>Scorpio<sup>4</sup> take those possibilities and provides the infrastructure and tooling needed to design, test, deliver, deploy and maintain sophisticated systems that rely upon smart data rather than smart code.</p>
+</div>

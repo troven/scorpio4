@@ -1,0 +1,88 @@
+<div>
+    <h2>SPARQL Queries</h2>
+
+    <p>SPARQL is the preferred query language for Scorpio<sup>4</sup>. It is the W3C-designed query language for RDF and the Semantic Web.</p>
+<p>It plays a similar role to SQL, but instead of being limited to one single database it can address the whole Semantic Web.</p>
+<p>Let's build a simple SPARQL query to find the <code>eg:Person</code>s that have already defined:</p>
+    <pre>
+        PREFIX     eg:        &lt;http://scorpio4demo.com/example/#&gt;
+
+        SELECT ?person ?name ?dob WHERE {
+            ?person     eg:name     ?name.
+            ?person     eg:DoB      ?dob.
+        }</pre>
+
+    <p>The <code>WHERE</code> clause defines a triple pattern, where some of the terms are replaced by <code>?placeholders</code>.</p>
+    <p>By now, it should make some sense.  SPARQL will find the terms the concrete facts.</p>
+
+    <table width="400">
+        <thead>
+            <tr><td><b>?person</b></td><td><b>?name</b></td><td><b>?dob</b></td></tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>:sally</td><td>"Sally Smith"</td><td>"1972-07-13"</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Gotcha</h2>
+    <p>There are many similarities between SPARQL and N3, but they are not exactly the same, unfortunately.</p>
+    <p>The first "gotcha" is the <code>@PREFIX</code> in N3 becomes <code>PREFIX</code> in SPARQL. I still get confused, but the benefits of a W3C standard outweigh the negatives.</p>
+
+    <p>We might have expected more results, what happened to <code>:harry</code>, <code>:anne</code> and <code>:dick</code>?</p>
+    <p>Well, they don't have names or dates of birth defined. So they don't match the pattern. To get the result you might have expected, we would ask:</p>
+
+    <h2>Optional Facts</h2>
+    <pre>
+    SELECT ?person ?name ?dob WHERE {
+        ?person     a           eg:Person.
+        OPTIONAL {
+            ?person     eg:name     ?name.
+        }
+        OPTIONAL {
+            ?person     eg:DoB      ?dob.
+        }
+    }</pre>
+
+    <p>This explicitly states we want all instances of an <code>eg:Person</code>, but
+    either <code>eg:name</code> and/or <code>eg:DoB</code> may be missing.</p>
+
+    <p>We need the <code>eg:Person</code> constraint otherwise
+        any statement that didn't have a <code>eg:name</code> or <code>eg:DoB</code> would be returned, whether they were an <code>eg:Person</code> or an <code>eg:BankAccount</code>.</p>
+
+    <table width="400">
+        <thead>
+        <tr><td><b>?person</b></td><td><b>?name</b></td><td><b>?dob</b></td></tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>:sally</td><td>"Sally Smith"</td><td>"1972-07-13"</td>
+        </tr>
+        <tr>
+            <td>:harry</td><td></td><td></td>
+        </tr>
+        <tr>
+            <td>:dick</td><td></td><td></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h2>Missing Facts</h2>
+    <p>If we wanted to fix up our data, we might query all <code>eg:Person</code>s that had missing data using <code>MINUS</code> keyword:</p>
+
+    <pre>
+    SELECT ?person ?name ?dob
+    WHERE {
+        ?person a eg:Person.
+
+        MINUS {
+            ?person eg:name  ?name.
+        }
+        MINUS {
+            ?person eg:DoB  ?dob.
+        }
+    }</pre>
+    <p>Notice how all the SPARQL constraints are declared as triples. We can use the semi-colon <code>;</code> syntax from our earlier N3 examples, when it makes sense.</p>
+</div>
